@@ -3,6 +3,7 @@ import Taro from "@tarojs/taro"
 import {AtTextarea, AtButton, AtList, AtListItem} from "taro-ui"
 import {View, Image, Picker} from "@tarojs/components"
 import {styled} from "linaria/react"
+import MainButton from "../../components/MainButton"
 
 const Container = styled(View)`
   height: 100vh;
@@ -15,16 +16,6 @@ const Container = styled(View)`
   }
   > .picker {
     margin: 20px 0;
-  }
-  > .button-wrapper {
-    padding: 20px 66px;
-    > .button {
-      height: 80px;
-      line-height: 80px;
-      box-shadow: 0 4px 12px 0 rgba(0,0,0,.4);
-      border: none;
-      background: #5AB086;
-    }
   }
 `
 
@@ -96,9 +87,7 @@ const ShopLink = () => {
           />
         </AtList>
       </Picker>
-      <View className='button-wrapper'>
-        <AtButton className='button' circle type='primary' onClick={startLink}>开始转链</AtButton>
-      </View>
+      <MainButton fn={startLink}/>
     </Container>
   )
 }
