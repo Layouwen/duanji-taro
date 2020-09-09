@@ -1,8 +1,9 @@
 export default {
   pages: [
     "pages/index/index",
-    "pages/history/history",
-    "pages/shopLink/shopLink"
+    "pages/shopLink/shopLink",
+    "pages/QRcodePage/QRcodePage",
+    "pages/history/history"
   ],
   window: {
     backgroundTextStyle: "light",
