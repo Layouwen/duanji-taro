@@ -10,7 +10,6 @@ import share from "../../assets/images/share.png"
 import picture from "../../assets/images/picture.png"
 import contact from "../../assets/images/contact.png"
 import feedback from "../../assets/images/feedback.png"
-import "./index.scss"
 
 const Container = styled(View)`
   height: 100vh;
