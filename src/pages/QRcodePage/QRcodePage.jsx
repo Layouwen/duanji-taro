@@ -21,7 +21,7 @@ const QRcodePage = () => {
   return (
     <Container>
       <Image src={QRcode}/>
-      <MainButton fn={selectQRcode}/>
+      <MainButton fn={selectQRcode}>点击选择二维码</MainButton>
     </Container>
   )
 }

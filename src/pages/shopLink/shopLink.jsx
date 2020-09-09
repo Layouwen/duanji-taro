@@ -3,6 +3,7 @@ import Taro from "@tarojs/taro"
 import {AtTextarea, AtButton, AtList, AtListItem} from "taro-ui"
 import {View, Image, Picker} from "@tarojs/components"
 import {styled} from "linaria/react"
+import ticp from "../../assets/images/ticp.png"
 import MainButton from "../../components/MainButton"
 
 const Container = styled(View)`
@@ -66,7 +67,7 @@ const ShopLink = () => {
 
   return (
     <Container>
-      <Image></Image>
+      <Image src={ticp}/>
       <AtTextarea
         value={inputValue}
         height={200}
@@ -87,7 +88,7 @@ const ShopLink = () => {
           />
         </AtList>
       </Picker>
-      <MainButton fn={startLink}/>
+      <MainButton fn={startLink}>开始转链</MainButton>
     </Container>
   )
 }

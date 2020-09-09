@@ -17,7 +17,7 @@ const Container = styled(View)`
 const MainButton = (props) => {
   return (
     <Container>
-      <AtButton className='button' circle type='primary' onClick={props.fn}>开始转链</AtButton>
+      <AtButton className='button' circle type='primary' onClick={props.fn}>{props.children}</AtButton>
     </Container>
   )
 }
