@@ -1,7 +1,8 @@
 export default {
   pages: [
     "pages/index/index",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/shopLink/shopLink"
   ],
   window: {
     backgroundTextStyle: "light",

@@ -1,4 +1,5 @@
 import React from "react"
+import Taro from "@tarojs/taro"
 import {Image, Text, View} from "@tarojs/components"
 import {styled} from "linaria/react"
 import {AtNoticebar} from "taro-ui"
@@ -80,6 +81,9 @@ const SmallButton = styled(View)`
 `
 
 const Index = () => {
+  const linkHistory = () => {
+    Taro.navigateTo({url: "/pages/history/history"})
+  }
   return (
     <Container>
       <BigTitle></BigTitle>
@@ -104,7 +108,7 @@ const Index = () => {
           </View>
         </BigButton>
         <ButtonWrapper>
-          <SmallButton><Image src={history}/><Text>历史记录</Text></SmallButton>
+          <SmallButton onClick={linkHistory}><Image src={history}/><Text>历史记录</Text></SmallButton>
           <SmallButton><Image src={help}/><Text>常见问题</Text></SmallButton>
           <SmallButton><Image src={share}/><Text>邀请好友</Text></SmallButton>
           <SmallButton><Image src={picture}/><Text>生成海报</Text></SmallButton>
