@@ -81,15 +81,31 @@ const SmallButton = styled(View)`
 `
 
 const Index = () => {
+  const linkShop = () => {
+    Taro.navigateTo({url: "/pages/shopLink/shopLink"})
+  }
+
+  const linkQRcode = () => {
+    Taro.navigateTo({url: "/pages/QRcodePage/QRcodePage"})
+  }
+
   const linkHistory = () => {
     Taro.navigateTo({url: "/pages/history/history"})
   }
+
+  const shareFrined = () => {
+    console.log(1)
+    Taro.showShareMenu({
+      withShareTicket: true
+    })
+  }
+
   return (
     <Container>
       <BigTitle></BigTitle>
       <ContentWrapper>
         <AtNoticebar icon='volume-plus' marquee>我是测试内容</AtNoticebar>
-        <BigButton>
+        <BigButton onClick={linkShop}>
           <View>
             <Text>商品链接</Text>
             <Text>支持京东/拼多多佣金链接</Text>
@@ -98,7 +114,7 @@ const Index = () => {
             <Image src={cart}/>
           </View>
         </BigButton>
-        <BigButton>
+        <BigButton onClick={linkQRcode}>
           <View>
             <Text>二维码链接</Text>
             <Text>支持加好友/群、邀请海报...</Text>
@@ -110,7 +126,7 @@ const Index = () => {
         <ButtonWrapper>
           <SmallButton onClick={linkHistory}><Image src={history}/><Text>历史记录</Text></SmallButton>
           <SmallButton><Image src={help}/><Text>常见问题</Text></SmallButton>
-          <SmallButton><Image src={share}/><Text>邀请好友</Text></SmallButton>
+          <SmallButton onClick={shareFrined}><Image src={share}/><Text>邀请好友</Text></SmallButton>
           <SmallButton><Image src={picture}/><Text>生成海报</Text></SmallButton>
           <SmallButton><Image src={contact}/><Text>在线客服</Text></SmallButton>
           <SmallButton><Image src={feedback}/><Text>意见反馈</Text></SmallButton>
