@@ -13,7 +13,9 @@ export default {
     'results|10': [{
       'id|+1': 0,
       'title': () => Random.ctitle(3, 5),
-      'content': () => Random.csentence(10, 20)
+      'read|0-20': 0,
+      'time': () => Random.datetime('MM-dd HH:mm'),
+      'url': () => Random.url('http')
     }]
   })
 };

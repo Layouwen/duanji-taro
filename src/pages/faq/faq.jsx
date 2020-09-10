@@ -7,7 +7,8 @@ import FaqItem from "../../components/FaqItem"
 const Container = styled(View)`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 80px;
   background: #ededed;
   > .item {
     margin-top: 20px;

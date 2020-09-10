@@ -5,8 +5,8 @@ import {styled} from "linaria/react"
 // import {AtProgress} from "taro-ui"
 
 const Container = styled(View)`
-  height: 100vh;
-  padding: 0 20px;
+  min-height: 100vh;
+  padding: 0 20px 60px 20px;
   background: #ededed;
 `
 
@@ -73,29 +73,35 @@ const Item = styled(View)`
   }
 `
 
-const LoadMore = styled(View)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 132px;
-  color: #4680C6;
-  text-decoration: underline;
-`
+// const LoadMore = styled(View)`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 132px;
+//   color: #4680C6;
+//   text-decoration: underline;
+// `
 
 const History = () => {
   const [historyItem, setHistoryItem] = useState([])
+
   const getHistoryItem = async () => {
     const {data: {results}} = await Taro.request({
       url: "http://127.0.0.1:9527/api/history"
     })
     setHistoryItem(results)
   }
+
   useEffect(() => {
     getHistoryItem()
   }, [])
+
   console.log(historyItem)
-  const test = async () => {
+
+  const copyLink = (url) => {
+    console.log(url)
   }
+
   return (
     <Container>
       <Title>
@@ -116,13 +122,13 @@ const History = () => {
               <Text>{item.title}</Text>
             </View>
             <View className='bottom'>
-              <Text>09-09 12:18</Text>
-              <Text>阅读 0</Text>
-              <Text>复制链接</Text>
+              <Text>{item.time}</Text>
+              <Text>阅读 {item.read}</Text>
+              <Text onClick={() => copyLink(item.url)}>复制链接</Text>
             </View>
           </Item>)
         ) : null}
-        <LoadMore onClick={test}>点击加载历史链接</LoadMore>
+        {/*<LoadMore onClick={test}>点击加载历史链接</LoadMore>*/}
       </ContentWrapper>
     </Container>
   )
