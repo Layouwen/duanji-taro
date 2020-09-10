@@ -1,6 +1,6 @@
-import React from "react"
+import React, {useEffect} from "react"
 import Taro from "@tarojs/taro"
-import {Image, Text, View} from "@tarojs/components"
+import {Button, Image, Text, View} from "@tarojs/components"
 import {styled} from "linaria/react"
 import {AtNoticebar} from "taro-ui"
 import cart from "../../assets/images/cart.png"
@@ -11,6 +11,7 @@ import share from "../../assets/images/share.png"
 import picture from "../../assets/images/picture.png"
 import contact from "../../assets/images/contact.png"
 import feedback from "../../assets/images/feedback.png"
+import EyButton from "../../components/EyButton"
 
 const Container = styled(View)`
   height: 100vh;
@@ -62,25 +63,12 @@ const ButtonWrapper = styled(View)`
   justify-content: space-between;
 `
 
-const SmallButton = styled(View)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  width: 320px;
-  margin-top: 32px;
-  font-size: 28px;
-  color: #fff;
-  border-radius: 12px;
-  background: #61B38A;
-  > Image {
-    width: 40px;
-    height: 40px;
-    margin-right: 8px;
-  }
-`
-
 const Index = () => {
+  useEffect(() => {
+    Taro.showShareMenu({
+      withShareTicket: true
+    })
+  }, [])
   const linkShop = () => {
     Taro.navigateTo({url: "/pages/shopLink/shopLink"})
   }
@@ -95,13 +83,6 @@ const Index = () => {
 
   const linkFaq = () => {
     Taro.navigateTo({url: "/pages/faq/faq"})
-  }
-
-  const shareFrined = () => {
-    console.log(1)
-    Taro.showShareMenu({
-      withShareTicket: true
-    })
   }
 
   return (
@@ -128,12 +109,12 @@ const Index = () => {
           </View>
         </BigButton>
         <ButtonWrapper>
-          <SmallButton onClick={linkHistory}><Image src={history}/><Text>历史记录</Text></SmallButton>
-          <SmallButton onClick={linkFaq}><Image src={help}/><Text>常见问题</Text></SmallButton>
-          <SmallButton onClick={shareFrined}><Image src={share}/><Text>邀请好友</Text></SmallButton>
-          <SmallButton><Image src={picture}/><Text>生成海报</Text></SmallButton>
-          <SmallButton><Image src={contact}/><Text>在线客服</Text></SmallButton>
-          <SmallButton><Image src={feedback}/><Text>意见反馈</Text></SmallButton>
+          <EyButton onClick={linkHistory} src={history} value='历史记录'/>
+          <EyButton onClick={linkFaq} src={help} value='常见问题'/>
+          <EyButton type='share' src={share} value='邀请好友'/>
+          <EyButton src={picture} value='生成海报'/>
+          <EyButton type='contact' src={contact} value='在线客服'/>
+          <EyButton type='feedback' src={feedback} value='意见反馈'/>
         </ButtonWrapper>
       </ContentWrapper>
     </Container>
