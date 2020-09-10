@@ -1,6 +1,6 @@
 import React, {useEffect} from "react"
 import Taro from "@tarojs/taro"
-import {Button, Image, Text, View} from "@tarojs/components"
+import {Image, Text, View} from "@tarojs/components"
 import {styled} from "linaria/react"
 import {AtNoticebar} from "taro-ui"
 import cart from "../../assets/images/cart.png"
