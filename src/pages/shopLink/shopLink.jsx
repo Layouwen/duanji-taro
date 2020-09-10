@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro"
 import {AtTextarea, AtButton, AtList, AtListItem} from "taro-ui"
 import {View, Image, Picker} from "@tarojs/components"
 import {styled} from "linaria/react"
-import ticp from "../../assets/images/ticp.png"
+import tip from "../../assets/images/tip.png"
 import MainButton from "../../components/MainButton"
 
 const Container = styled(View)`
@@ -40,16 +40,25 @@ const select = {
   number: 0
 }
 
+let linkStr = ""
+let searchStr = null
+
+const notLink = () => {
+  Taro.showToast({
+    title: "暂不支持该链接",
+    icon: "none",
+    duration: 2000
+  })
+}
+
 const ShopLink = () => {
   const [inputValue, setInputValue] = useState("")
   const [selector, setSelector] = useState(select)
 
   useEffect(() => {
-    if (inputValue === "") return
-    const reg = "(https|http)?://(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].[a-z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*().;?:@&=+$,%#-]*)+)?"
-    let str = inputValue
-    str = str.match(reg)
-    str && console.log(str[0])
+    if (inputValue) {
+      linkStr = inputValue
+    }
   }, [inputValue])
 
   const countNumber = (value) => {
@@ -62,6 +71,8 @@ const ShopLink = () => {
 
   const clearValue = () => {
     setInputValue("")
+    linkStr = ""
+    searchStr = null
   }
 
   const onSelect = (e) => {
@@ -69,13 +80,17 @@ const ShopLink = () => {
     setSelector({...selector, current: selector.item[index], number: index})
   }
 
-  const startLink = (e) => {
-    console.log(e)
+  const startLink = () => {
+    if (inputValue === "") notLink()
+    const reg = "(https|http)?://(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].[a-z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*().;?:@&=+$,%#-]*)+)?"
+    searchStr = linkStr.match(reg)
+    if (searchStr === null) notLink()
+    searchStr && console.log(searchStr[0])
   }
 
   return (
     <Container>
-      <Image src={ticp}/>
+      <Image src={tip}/>
       <AtTextarea
         value={inputValue}
         height={200}
