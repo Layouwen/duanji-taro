@@ -3,7 +3,8 @@ export default {
     "pages/index/index",
     "pages/shopLink/shopLink",
     "pages/QRcodePage/QRcodePage",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/faq/faq"
   ],
   window: {
     backgroundTextStyle: "light",

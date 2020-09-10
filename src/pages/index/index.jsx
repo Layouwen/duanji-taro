@@ -93,6 +93,10 @@ const Index = () => {
     Taro.navigateTo({url: "/pages/history/history"})
   }
 
+  const linkFaq = () => {
+    Taro.navigateTo({url: "/pages/faq/faq"})
+  }
+
   const shareFrined = () => {
     console.log(1)
     Taro.showShareMenu({
@@ -125,7 +129,7 @@ const Index = () => {
         </BigButton>
         <ButtonWrapper>
           <SmallButton onClick={linkHistory}><Image src={history}/><Text>历史记录</Text></SmallButton>
-          <SmallButton><Image src={help}/><Text>常见问题</Text></SmallButton>
+          <SmallButton onClick={linkFaq}><Image src={help}/><Text>常见问题</Text></SmallButton>
           <SmallButton onClick={shareFrined}><Image src={share}/><Text>邀请好友</Text></SmallButton>
           <SmallButton><Image src={picture}/><Text>生成海报</Text></SmallButton>
           <SmallButton><Image src={contact}/><Text>在线客服</Text></SmallButton>
