@@ -1,4 +1,5 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
+import Taro from "@tarojs/taro"
 import {styled} from "linaria/react"
 import {View} from "@tarojs/components"
 import FaqItem from "../../components/FaqItem"
@@ -14,9 +15,21 @@ const Container = styled(View)`
 `
 
 const Faq = () => {
+  const [faqItem, setFaqItem] = useState([])
+  const getFaqItem = async () => {
+    const {data: {results}} = await Taro.request({
+      url: "http://127.0.0.1:9527/api/faq"
+    })
+    setFaqItem(results)
+  }
+  useEffect(() => {
+    getFaqItem()
+  }, [])
   return (
     <Container>
-      <FaqItem className='item' title='你好' content='一键生成视频号扩展链接的小程序，帮助视频号创作者零门槛'/>
+      {faqItem.length > 0 ? faqItem.map(item => (
+        <FaqItem className='item' title={item.title} content={item.content}/>
+      )) : null}
     </Container>
   )
 }

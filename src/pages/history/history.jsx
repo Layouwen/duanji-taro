@@ -1,7 +1,8 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
+import Taro from "@tarojs/taro"
 import {View, Text} from "@tarojs/components"
 import {styled} from "linaria/react"
-import {AtProgress} from "taro-ui"
+// import {AtProgress} from "taro-ui"
 
 const Container = styled(View)`
   height: 100vh;
@@ -49,6 +50,7 @@ const Item = styled(View)`
   justify-content: space-between;
   height: 160px;
   padding: 24px;
+  margin-top: 20px;
   border-radius: 8px;
   background: #fff;
   > .title {
@@ -59,6 +61,7 @@ const Item = styled(View)`
   }
   > .bottom {
     display: flex;
+    margin-top: 20px;
     > Text:first-child {
       margin-right: 10px;
     }
@@ -80,6 +83,19 @@ const LoadMore = styled(View)`
 `
 
 const History = () => {
+  const [historyItem, setHistoryItem] = useState([])
+  const getHistoryItem = async () => {
+    const {data: {results}} = await Taro.request({
+      url: "http://127.0.0.1:9527/api/history"
+    })
+    setHistoryItem(results)
+  }
+  useEffect(() => {
+    getHistoryItem()
+  }, [])
+  console.log(historyItem)
+  const test = async () => {
+  }
   return (
     <Container>
       <Title>
@@ -93,18 +109,20 @@ const History = () => {
         {/*</View>*/}
       </Title>
       <ContentWrapper>
-        <Item>
-          <View className='title'>
-            <Text>[新版]</Text>
-            <Text>查看同款商品</Text>
-          </View>
-          <View className='bottom'>
-            <Text>09-09 12:18</Text>
-            <Text>阅读 0</Text>
-            <Text>复制链接</Text>
-          </View>
-        </Item>
-        <LoadMore>点击加载历史链接</LoadMore>
+        {historyItem.length > 0 ? historyItem.map(item => (
+          <Item key={item.id}>
+            <View className='title'>
+              <Text>[新版]</Text>
+              <Text>{item.title}</Text>
+            </View>
+            <View className='bottom'>
+              <Text>09-09 12:18</Text>
+              <Text>阅读 0</Text>
+              <Text>复制链接</Text>
+            </View>
+          </Item>)
+        ) : null}
+        <LoadMore onClick={test}>点击加载历史链接</LoadMore>
       </ContentWrapper>
     </Container>
   )
