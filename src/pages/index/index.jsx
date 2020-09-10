@@ -8,7 +8,7 @@ import QRcode from "../../assets/images/QRcode.png"
 import history from "../../assets/images/list.png"
 import help from "../../assets/images/help.png"
 import share from "../../assets/images/share.png"
-import picture from "../../assets/images/picture.png"
+// import picture from "../../assets/images/picture.png"
 import contact from "../../assets/images/contact.png"
 import feedback from "../../assets/images/feedback.png"
 import EyButton from "../../components/EyButton"
@@ -112,7 +112,7 @@ const Index = () => {
           <EyButton onClick={linkHistory} src={history} value='历史记录'/>
           <EyButton onClick={linkFaq} src={help} value='常见问题'/>
           <EyButton type='share' src={share} value='邀请好友'/>
-          <EyButton src={picture} value='生成海报'/>
+          {/*<EyButton src={picture} value='生成海报'/>*/}
           <EyButton type='contact' src={contact} value='在线客服'/>
           <EyButton type='feedback' src={feedback} value='意见反馈'/>
         </ButtonWrapper>

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Taro from "@tarojs/taro"
 import {AtTextarea, AtButton, AtList, AtListItem} from "taro-ui"
 import {View, Image, Picker} from "@tarojs/components"
@@ -44,6 +44,14 @@ const ShopLink = () => {
   const [inputValue, setInputValue] = useState("")
   const [selector, setSelector] = useState(select)
 
+  useEffect(() => {
+    if (inputValue === "") return
+    const reg = "(https|http)?://(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].[a-z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*().;?:@&=+$,%#-]*)+)?"
+    let str = inputValue
+    str = str.match(reg)
+    str && console.log(str[0])
+  }, [inputValue])
+
   const countNumber = (value) => {
     setInputValue(value)
   }
@@ -61,8 +69,8 @@ const ShopLink = () => {
     setSelector({...selector, current: selector.item[index], number: index})
   }
 
-  const startLink = () => {
-    console.log(1)
+  const startLink = (e) => {
+    console.log(e)
   }
 
   return (

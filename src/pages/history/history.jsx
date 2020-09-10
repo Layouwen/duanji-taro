@@ -87,10 +87,10 @@ const History = () => {
           <Text>共有0个链接</Text>
           <Text>刷新</Text>
         </View>
-        <View className='bottom'>
-          <Text>新版排队进度:</Text>
-          <AtProgress className='percent' percent={100}></AtProgress>
-        </View>
+        {/*<View className='bottom'>*/}
+        {/*  <Text>新版排队进度:</Text>*/}
+        {/*  <AtProgress className='percent' percent={100}></AtProgress>*/}
+        {/*</View>*/}
       </Title>
       <ContentWrapper>
         <Item>
