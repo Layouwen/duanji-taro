@@ -86,9 +86,11 @@ const History = () => {
   const [historyItem, setHistoryItem] = useState([])
 
   const getHistoryItem = async () => {
+    Taro.showToast({title: "加载数据中", icon: "loading", duration: 9999})
     const {data: {results}} = await Taro.request({
       url: "http://127.0.0.1:9527/api/history"
     })
+    Taro.hideToast()
     setHistoryItem(results)
   }
 
@@ -98,16 +100,25 @@ const History = () => {
 
   console.log(historyItem)
 
+  const refresh = () => {
+    getHistoryItem()
+  }
+
   const copyLink = (url) => {
-    console.log(url)
+    Taro.setClipboardData({
+      data: url,
+      fail: () => {
+        Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
+      }
+    })
   }
 
   return (
     <Container>
       <Title>
         <View className='top'>
-          <Text>共有0个链接</Text>
-          <Text>刷新</Text>
+          <Text>共有{historyItem ? historyItem.length : 0}个链接</Text>
+          <Text onClick={refresh}>刷新</Text>
         </View>
         {/*<View className='bottom'>*/}
         {/*  <Text>新版排队进度:</Text>*/}
