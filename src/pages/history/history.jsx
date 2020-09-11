@@ -39,7 +39,6 @@ const Title = styled(View)`
 const ContentWrapper = styled(View)`
   display: flex;
   flex-direction: column;
-  height: 100%;
   font-size: 24px;
 `
 
@@ -81,6 +80,13 @@ const Item = styled(View)`
 //   color: #4680C6;
 //   text-decoration: underline;
 // `
+
+const NotContent = styled(View)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 120px);
+`
 
 const History = () => {
   const [historyItem, setHistoryItem] = useState([])
@@ -138,7 +144,9 @@ const History = () => {
               <Text onClick={() => copyLink(item.url)}>复制链接</Text>
             </View>
           </Item>)
-        ) : null}
+        ) : <NotContent>
+          暂无历史记录
+        </NotContent>}
         {/*<LoadMore onClick={test}>点击加载历史链接</LoadMore>*/}
       </ContentWrapper>
     </Container>
