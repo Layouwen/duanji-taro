@@ -13,9 +13,9 @@ const EyLogin = () => {
   }
   return (
     <AtModal isOpened={showModal}>
-      <AtModalHeader>微信授权</AtModalHeader>
+      <AtModalHeader>权限授权</AtModalHeader>
       <AtModalContent>
-        这里是正文内容，欢迎加入京东凹凸实验室
+        获取微信昵称以及微信头像以保存数据
       </AtModalContent>
       <AtModalAction>
         <Button onClick={onClose}>取消</Button>
