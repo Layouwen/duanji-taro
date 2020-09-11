@@ -1,8 +1,9 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import Taro from "@tarojs/taro"
 import {Image, Text, View} from "@tarojs/components"
 import {styled} from "linaria/react"
 import {AtNoticebar} from "taro-ui"
+
 import cart from "../../assets/images/cart.png"
 import QRcode from "../../assets/images/QRcode.png"
 import history from "../../assets/images/list.png"
@@ -11,7 +12,10 @@ import share from "../../assets/images/share.png"
 // import picture from "../../assets/images/picture.png"
 import contact from "../../assets/images/contact.png"
 import feedback from "../../assets/images/feedback.png"
+
 import EyButton from "../../components/EyButton"
+import EyLogin from "../../components/Login"
+import {checkLogin} from "../../utils/login"
 
 const Container = styled(View)`
   height: 100vh;
@@ -64,11 +68,26 @@ const ButtonWrapper = styled(View)`
 `
 
 const Index = () => {
+  const [isLogin, setIsLogin] = useState(false)
+
   useEffect(() => {
-    Taro.showShareMenu({
-      withShareTicket: true
-    })
+    Taro.showShareMenu({withShareTicket: true})
+    init()
   }, [])
+
+  useEffect(() => {
+    init()
+  }, [isLogin])
+
+  const init = async () => {
+    const isLoginInfo = await checkLogin()
+    setIsLogin(isLoginInfo)
+  }
+
+  const onGetUserInfoEventDetail = (data) => {
+    console.log(data)
+  }
+
   const linkShop = () => {
     Taro.navigateTo({url: "/pages/shopLink/shopLink"})
   }
@@ -87,6 +106,7 @@ const Index = () => {
 
   return (
     <Container>
+      {isLogin === true ? null : <EyLogin fn={onGetUserInfoEventDetail}/>}
       <BigTitle></BigTitle>
       <ContentWrapper>
         <AtNoticebar icon='volume-plus' marquee>我是测试内容</AtNoticebar>

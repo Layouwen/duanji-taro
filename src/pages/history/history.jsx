@@ -98,7 +98,7 @@ const History = () => {
     getHistoryItem()
   }, [])
 
-  console.log(historyItem)
+  // console.log(historyItem)
 
   const refresh = () => {
     getHistoryItem()
