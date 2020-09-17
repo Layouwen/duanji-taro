@@ -3,7 +3,7 @@ import {setCookies, getCookies} from "./cookie"
 import {login} from "./auth"
 
 const defaultOptions = {
-  baseURL: process.env.API_BASE_URL,
+  baseURL: "http://192.168.31.186:8003",
 }
 
 function handHeader(header) {
@@ -34,7 +34,7 @@ async function request(
   {baseURL}
 ) {
   let response = {}
-  wx.showNavigationBarLoading()
+  Taro.showNavigationBarLoading()
   try {
     response = await Taro.request({
       method,
@@ -46,7 +46,7 @@ async function request(
   } catch (reason) {
     return Promise.reject(reason)
   } finally {
-    wx.hideNavigationBarLoading()
+    Taro.hideNavigationBarLoading()
   }
 
   const {data: responseData, header: responseHeader} = response

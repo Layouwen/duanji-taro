@@ -15,7 +15,6 @@ import feedback from "../../assets/images/feedback.png"
 
 import EyButton from "../../components/EyButton"
 import EyLogin from "../../components/Login"
-import {checkLogin} from "../../utils/login"
 
 const Container = styled(View)`
   height: 100vh;
@@ -67,7 +66,7 @@ const ButtonWrapper = styled(View)`
   justify-content: space-between;
 `
 
-const Index = () => {
+export default () => {
   const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => {
@@ -141,4 +140,3 @@ const Index = () => {
   )
 }
 
-export default Index

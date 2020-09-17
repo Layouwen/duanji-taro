@@ -1,10 +1,12 @@
 import {Component} from "react"
 import "taro-ui/dist/style/index.scss"
+import {login} from "./utils/auth"
 import "./app.scss"
 
 class App extends Component {
 
   componentDidMount() {
+    void login()
   }
 
   componentDidShow() {
