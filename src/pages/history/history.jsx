@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import Taro from "@tarojs/taro"
 import {View, Text} from "@tarojs/components"
 import {styled} from "linaria/react"
-// import {AtProgress} from "taro-ui"
+import {list_link} from "../../utils/api"
 
 const Container = styled(View)`
   min-height: 100vh;
@@ -72,15 +72,6 @@ const Item = styled(View)`
   }
 `
 
-// const LoadMore = styled(View)`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 132px;
-//   color: #4680C6;
-//   text-decoration: underline;
-// `
-
 const NotContent = styled(View)`
   display: flex;
   justify-content: center;
@@ -88,33 +79,32 @@ const NotContent = styled(View)`
   height: calc(100vh - 120px);
 `
 
+let {id} = Taro.getStorageSync("userinfo")
+
 const History = () => {
   const [historyItem, setHistoryItem] = useState([])
 
   const getHistoryItem = async () => {
-    Taro.showToast({title: "加载数据中", icon: "loading", duration: 9999})
-    const {data: {results}} = await Taro.request({
-      url: "http://127.0.0.1:9527/api/history"
-    })
+    await Taro.showToast({title: "加载数据中", icon: "loading", duration: 9999})
+    const {results} = await list_link(id)
     Taro.hideToast()
     setHistoryItem(results)
   }
 
   useEffect(() => {
-    getHistoryItem()
+    console.log(id)
+    void getHistoryItem()
   }, [])
 
-  // console.log(historyItem)
-
   const refresh = () => {
-    getHistoryItem()
+    void getHistoryItem()
   }
 
   const copyLink = (url) => {
-    Taro.setClipboardData({
+    void Taro.setClipboardData({
       data: url,
       fail: () => {
-        Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
+        void Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
       }
     })
   }
@@ -126,10 +116,6 @@ const History = () => {
           <Text>共有{historyItem ? historyItem.length : 0}个链接</Text>
           <Text onClick={refresh}>刷新</Text>
         </View>
-        {/*<View className='bottom'>*/}
-        {/*  <Text>新版排队进度:</Text>*/}
-        {/*  <AtProgress className='percent' percent={100}></AtProgress>*/}
-        {/*</View>*/}
       </Title>
       <ContentWrapper>
         {historyItem.length > 0 ? historyItem.map(item => (
@@ -140,8 +126,8 @@ const History = () => {
             </View>
             <View className='bottom'>
               <Text>{item.time}</Text>
-              <Text>阅读 {item.read}</Text>
-              <Text onClick={() => copyLink(item.url)}>复制链接</Text>
+              {/*<Text>阅读 {item.read}</Text>*/}
+              <Text onClick={() => copyLink(item.link)}>复制链接</Text>
             </View>
           </Item>)
         ) : <NotContent>
