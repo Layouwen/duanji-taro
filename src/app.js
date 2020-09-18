@@ -1,4 +1,5 @@
 import {Component} from "react"
+import Taro from "@tarojs/taro"
 import "taro-ui/dist/style/index.scss"
 import {login} from "./utils/auth"
 import "./app.scss"
@@ -6,7 +7,14 @@ import "./app.scss"
 class App extends Component {
 
   componentDidMount() {
-    void login()
+    try {
+      const userInfo = Taro.getStorageSync("userinfo")
+      if (typeof userInfo !== "object") {
+        void login()
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   componentDidShow() {
