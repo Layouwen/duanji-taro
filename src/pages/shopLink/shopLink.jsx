@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react"
+import { Image, Picker, View } from "@tarojs/components"
 import Taro from "@tarojs/taro"
-import {AtTextarea, AtButton, AtList, AtListItem} from "taro-ui"
-import {View, Image, Picker} from "@tarojs/components"
-import {styled} from "linaria/react"
+import { styled } from "linaria/react"
+import React, { useEffect, useState } from "react"
+import { AtButton, AtList, AtListItem, AtTextarea } from "taro-ui"
 import tip from "../../assets/images/tip.png"
 import MainButton from "../../components/MainButton"
+import { create_link } from "../../utils/api"
 
 const Container = styled(View)`
   height: 100vh;
@@ -37,7 +38,7 @@ const ButtonWrapper = styled(View)`
 const select = {
   item: ["查看同款商品", "查看视频同款", "购买同款商品", "购买视频同款", "点击查看同款", "点击购买商品", "点击购买同款", "买同款点这里", "视频同款商品", "自定义引导词"],
   current: "查看同款商品",
-  number: 0
+  number: 0,
 }
 
 let linkStr = ""
@@ -47,9 +48,19 @@ const notLink = () => {
   Taro.showToast({
     title: "暂不支持该链接",
     icon: "none",
-    duration: 2000
+    duration: 2000,
   })
 }
+
+const successLink = () => {
+  Taro.showToast({
+    title: "转换成功，请去历史记录查看链接",
+    icon: "none",
+    duration: 2000,
+  })
+}
+
+let {id} = Taro.getStorageSync("userinfo")
 
 const ShopLink = () => {
   const [inputValue, setInputValue] = useState("")
@@ -81,11 +92,34 @@ const ShopLink = () => {
   }
 
   const startLink = () => {
-    if (inputValue === "") notLink()
+    const linkList = [
+      {type: 1, link: "https://u.jd.com/"},
+      {type: 2, link: "https://p.pinduoduo.com/"},
+    ]
     const reg = "(https|http)?://(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].[a-z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*().;?:@&=+$,%#-]*)+)?"
     searchStr = linkStr.match(reg)
-    if (searchStr === null) notLink()
-    searchStr && console.log(searchStr[0])
+    if (inputValue !== "" && searchStr !== null) {
+      let flag = false
+      let type = 1
+      console.log(searchStr[0])
+      linkList.forEach(item => {
+        if (searchStr[0].indexOf(item.link) === 0) {
+          flag = true
+          type = item.type
+        }
+      })
+      if (flag) {
+        void getCreateLink(selector.current, parseInt(id), searchStr[0], type)
+        successLink()
+        setInputValue("")
+        return
+      }
+    }
+    notLink()
+  }
+
+  const getCreateLink = async (title, user, link, type) => {
+    return await create_link({title, link, user, type})
   }
 
   return (
@@ -106,7 +140,7 @@ const ShopLink = () => {
       <Picker className='picker' value={selector.number} mode='selector' range={selector.item} onChange={onSelect}>
         <AtList>
           <AtListItem
-            title='国家地区'
+            title='引导词'
             extraText={selector.current}
           />
         </AtList>
