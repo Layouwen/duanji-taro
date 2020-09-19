@@ -79,25 +79,38 @@ const NotContent = styled(View)`
   height: calc(100vh - 120px);
 `
 
-let {id} = Taro.getStorageSync("userinfo")
+const LoadMore = styled(View)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 132px;
+  color: #4680C6;
+  text-decoration: underline;
+ `
+
+const {id} = Taro.getStorageSync("userinfo")
+let pageNumber = 0
+const pageSize = 5
 
 const History = () => {
   const [historyItem, setHistoryItem] = useState([])
-
-  const getHistoryItem = async () => {
-    await Taro.showToast({title: "加载数据中", icon: "loading", duration: 9999})
-    const {results} = await list_link(id)
-    Taro.hideToast()
-    setHistoryItem(results)
-  }
+  const [isMore, setIsMore] = useState(true)
+  const [number, setNumber] = useState(0)
 
   useEffect(() => {
-    console.log(id)
-    void getHistoryItem()
+    loadMore()
   }, [])
 
-  const refresh = () => {
-    void getHistoryItem()
+  useEffect(() => {
+    if (number !== 0) {
+      loadMore()
+    }
+  }, [number])
+
+  const refresh = async () => {
+    pageNumber = 0
+    setHistoryItem([])
+    setNumber(number + 1)
   }
 
   const copyLink = (url) => {
@@ -107,6 +120,16 @@ const History = () => {
         void Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
       },
     })
+  }
+
+  const loadMore = async () => {
+    await Taro.showToast({title: "加载数据中", icon: "loading", duration: 9999})
+    const flag = pageSize * pageNumber <= historyItem.length
+    if (!flag) { setIsMore(flag) }
+    const {results} = await list_link(id, pageSize, ++pageNumber)
+    Taro.hideToast()
+    console.log(1111)
+    setHistoryItem([...historyItem, ...results])
   }
 
   return (
@@ -133,7 +156,7 @@ const History = () => {
         ) : <NotContent>
           暂无历史记录
         </NotContent>}
-        {/*<LoadMore onClick={test}>点击加载历史链接</LoadMore>*/}
+        {isMore ? <LoadMore onClick={loadMore}>点击加载历史链接</LoadMore> : <LoadMore>暂无更多</LoadMore>}
       </ContentWrapper>
     </Container>
   )
