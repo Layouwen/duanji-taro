@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import Taro from "@tarojs/taro"
-import {View, Text} from "@tarojs/components"
-import {styled} from "linaria/react"
-import {list_link} from "../../utils/api"
+import { View, Text } from "@tarojs/components"
+import { styled } from "linaria/react"
+import { list_link } from "../../utils/api"
 
 const Container = styled(View)`
   min-height: 100vh;
@@ -105,7 +105,7 @@ const History = () => {
       data: url,
       fail: () => {
         void Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
-      }
+      },
     })
   }
 
@@ -129,7 +129,7 @@ const History = () => {
               {/*<Text>阅读 {item.read}</Text>*/}
               <Text onClick={() => copyLink(item.link)}>复制链接</Text>
             </View>
-          </Item>)
+          </Item>),
         ) : <NotContent>
           暂无历史记录
         </NotContent>}

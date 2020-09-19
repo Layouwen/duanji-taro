@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react"
-import Taro from "@tarojs/taro"
-import {styled} from "linaria/react"
-import {View} from "@tarojs/components"
+import React, { useEffect, useState } from "react"
+import { styled } from "linaria/react"
+import { View } from "@tarojs/components"
+import { list_question } from "../../utils/api"
 import FaqItem from "../../components/FaqItem"
 
 const Container = styled(View)`
@@ -15,16 +15,14 @@ const Container = styled(View)`
   }
 `
 
-const Faq = () => {
+export default () => {
   const [faqItem, setFaqItem] = useState([])
   const getFaqItem = async () => {
-    const {data: {results}} = await Taro.request({
-      url: "http://127.0.0.1:9527/api/faq"
-    })
+    const {results} = await list_question()
     setFaqItem(results)
   }
   useEffect(() => {
-    getFaqItem()
+    void getFaqItem()
   }, [])
   return (
     <Container>
@@ -34,5 +32,3 @@ const Faq = () => {
     </Container>
   )
 }
-
-export default Faq

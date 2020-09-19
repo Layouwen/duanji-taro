@@ -1,6 +1,6 @@
-import React, {useState} from "react"
-import {Button} from "@tarojs/components"
-import {AtModal, AtModalHeader, AtModalContent, AtModalAction} from "taro-ui"
+import React, { useState } from "react"
+import { Button } from "@tarojs/components"
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui"
 
 const EyLogin = () => {
   const [showModal, setShowModal] = useState(true)

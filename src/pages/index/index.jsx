@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import Taro from "@tarojs/taro"
-import {Image, Text, View} from "@tarojs/components"
-import {styled} from "linaria/react"
-import {AtNoticebar} from "taro-ui"
+import { Image, Text, View } from "@tarojs/components"
+import { styled } from "linaria/react"
+import { AtNoticebar } from "taro-ui"
 
 import cart from "../../assets/images/cart.png"
-import QRcode from "../../assets/images/QRcode.png"
+//import QRcode from "../../assets/images/QRcode.png"
 import history from "../../assets/images/list.png"
 import help from "../../assets/images/help.png"
 import share from "../../assets/images/share.png"
@@ -67,20 +67,16 @@ const ButtonWrapper = styled(View)`
 `
 
 export default () => {
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
 
   useEffect(() => {
-    Taro.showShareMenu({withShareTicket: true})
-    init()
+    void Taro.showShareMenu({withShareTicket: true})
+    void init()
   }, [])
 
-  useEffect(() => {
-    init()
-  }, [isLogin])
-
   const init = async () => {
-    const isLoginInfo = await checkLogin()
-    setIsLogin(isLoginInfo)
+    let {authSetting} = await Taro.getSetting()
+    if (authSetting["scope.userInfo"] !== true) { setIsLogin(false) }
   }
 
   const onGetUserInfoEventDetail = (data) => {
@@ -88,19 +84,19 @@ export default () => {
   }
 
   const linkShop = () => {
-    Taro.navigateTo({url: "/pages/shopLink/shopLink"})
+    void Taro.navigateTo({url: "/pages/shopLink/shopLink"})
   }
 
-  const linkQRcode = () => {
-    Taro.navigateTo({url: "/pages/QRcodePage/QRcodePage"})
-  }
+//  const linkQRcode = () => {
+//    void Taro.navigateTo({url: "/pages/QRcodePage/QRcodePage"})
+//  }
 
   const linkHistory = () => {
-    Taro.navigateTo({url: "/pages/history/history"})
+    void Taro.navigateTo({url: "/pages/history/history"})
   }
 
   const linkFaq = () => {
-    Taro.navigateTo({url: "/pages/faq/faq"})
+    void Taro.navigateTo({url: "/pages/faq/faq"})
   }
 
   return (
@@ -118,15 +114,15 @@ export default () => {
             <Image src={cart}/>
           </View>
         </BigButton>
-        <BigButton onClick={linkQRcode}>
-          <View>
-            <Text>二维码链接</Text>
-            <Text>支持加好友/群、邀请海报...</Text>
-          </View>
-          <View>
-            <Image src={QRcode}/>
-          </View>
-        </BigButton>
+        {/*<BigButton onClick={linkQRcode}>*/}
+        {/*  <View>*/}
+        {/*    <Text>二维码链接</Text>*/}
+        {/*    <Text>支持加好友/群、邀请海报...</Text>*/}
+        {/*  </View>*/}
+        {/*  <View>*/}
+        {/*    <Image src={QRcode}/>*/}
+        {/*  </View>*/}
+        {/*</BigButton>*/}
         <ButtonWrapper>
           <EyButton onClick={linkHistory} src={history} value='历史记录'/>
           <EyButton onClick={linkFaq} src={help} value='常见问题'/>
@@ -139,4 +135,3 @@ export default () => {
     </Container>
   )
 }
-

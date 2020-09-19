@@ -1,7 +1,3 @@
-// import {config} from "dotenv"
-//
-// config()
-
 export default {
   env: {
     NODE_ENV: "\"development\"",
@@ -10,5 +6,5 @@ export default {
   },
   defineConstants: {},
   mini: {},
-  h5: {}
+  h5: {},
 }

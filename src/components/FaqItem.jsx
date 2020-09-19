@@ -1,6 +1,6 @@
 import React from "react"
-import {styled} from "linaria/react"
-import {Text, View} from "@tarojs/components"
+import { styled } from "linaria/react"
+import { Text, View } from "@tarojs/components"
 
 const Container = styled(View)`
   display: flex;
@@ -17,7 +17,7 @@ const Container = styled(View)`
   }
 `
 
-const FaqItem = (props) => {
+export default (props) => {
   return (
     <Container className={props.className}>
       <Text className='title'>{props.title}</Text>
@@ -25,5 +25,3 @@ const FaqItem = (props) => {
     </Container>
   )
 }
-
-export default FaqItem
