@@ -12,6 +12,7 @@ import share from "../../assets/images/share.png"
 // import picture from "../../assets/images/picture.png"
 import contact from "../../assets/images/contact.png"
 import feedback from "../../assets/images/feedback.png"
+import kouhao from "../../assets/images/kouhao.png"
 
 import EyButton from "../../components/EyButton"
 import EyLogin from "../../components/Login"
@@ -23,7 +24,11 @@ const Container = styled(View)`
 
 const BigTitle = styled(View)`
   height: 300px;
-  background: #4EA570;
+  background: #1254aa;
+  > Image {
+    width: 100%;
+    height: 100%;
+  }
 `
 
 const ContentWrapper = styled(View)`
@@ -37,7 +42,7 @@ const BigButton = styled(View)`
   padding: 28px 40px 28px 52px;
   margin-top: 32px;
   border-radius: 12px;
-  background: #61B38A;
+  background: #1254aa;
   > View:first-child {
     flex: 1;
     display: flex;
@@ -102,9 +107,11 @@ export default () => {
   return (
     <Container>
       {isLogin === true ? null : <EyLogin fn={onGetUserInfoEventDetail}/>}
-      <BigTitle></BigTitle>
+      <BigTitle>
+        <Image src={kouhao}/>
+      </BigTitle>
       <ContentWrapper>
-        <AtNoticebar icon='volume-plus' marquee>我是测试内容</AtNoticebar>
+        {/*<AtNoticebar icon='volume-plus' marquee>短内容带货用短集</AtNoticebar>*/}
         <BigButton onClick={linkShop}>
           <View>
             <Text>商品链接</Text>

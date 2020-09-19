@@ -29,8 +29,8 @@ const ButtonWrapper = styled(View)`
     height: 56px;
     margin: 0;
     line-height: 56px;
-    color: #5AB086;
-    border: 2px solid #5AB086;
+    color: #1254aa;
+    border: 2px solid #1254aa;
   }
 `
 

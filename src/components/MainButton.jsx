@@ -10,7 +10,7 @@ const Container = styled(View)`
     line-height: 80px;
     box-shadow: 0 4px 12px 0 rgba(0,0,0,.4);
     border: none;
-    background: #5AB086;
+    background: #1254aa;
   }
 `
 

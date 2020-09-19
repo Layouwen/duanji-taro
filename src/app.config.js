@@ -4,12 +4,12 @@ export default {
     "pages/shopLink/shopLink",
     "pages/QRcodePage/QRcodePage",
     "pages/history/history",
-    "pages/faq/faq"
+    "pages/faq/faq",
   ],
   window: {
     backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#4EA570",
-    navigationBarTitleText: "拓展链接",
-    navigationBarTextStyle: "white"
-  }
+    navigationBarBackgroundColor: "#1254aa",
+    navigationBarTitleText: "短集",
+    navigationBarTextStyle: "white",
+  },
 }

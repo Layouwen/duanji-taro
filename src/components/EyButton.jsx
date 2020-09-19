@@ -13,7 +13,7 @@ const Wrapper = styled(View)`
     font-size: 28px;
     color: #fff;
     border-radius: 12px;
-    background: #61B38A;
+    background: #1254aa;
     > Image {
       width: 40px;
       height: 40px;
