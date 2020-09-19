@@ -49,6 +49,7 @@
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
     "set-cookie-parser": "^2.4.6",
+    "taro-plugin-canvas": "^1.0.10",
     "taro-ui": "3.0.0-alpha.3"
   },
   "devDependencies": {

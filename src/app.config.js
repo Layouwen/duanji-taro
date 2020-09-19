@@ -1,5 +1,6 @@
 export default {
   pages: [
+    "pages/test/test",
     "pages/index/index",
     "pages/shopLink/shopLink",
     "pages/QRcodePage/QRcodePage",

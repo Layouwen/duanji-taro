@@ -110,6 +110,7 @@ const History = () => {
   const refresh = async () => {
     pageNumber = 0
     setHistoryItem([])
+    setIsMore(true)
     setNumber(number + 1)
   }
 
