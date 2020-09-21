@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import Taro from "@tarojs/taro"
 import { View, Text } from "@tarojs/components"
 import { styled } from "linaria/react"
-import { list_link } from "../../utils/api"
+import { list_link, get_short_link } from "../../utils/api"
 
 const Container = styled(View)`
   min-height: 100vh;
@@ -53,10 +53,10 @@ const Item = styled(View)`
   border-radius: 8px;
   background: #fff;
   > .title {
-    > Text:first-child {
-      margin-right: 10px;
-      color: #DB6F66;
-    }
+    //> Text:first-child {
+    //  margin-right: 10px;
+    //  color: #DB6F66;
+    //}
   }
   > .bottom {
     display: flex;
@@ -139,9 +139,17 @@ const History = () => {
     setHistoryItem(res.results)
   }
 
-  const copyLink = (url) => {
+  const copyLink = async (url1, url2) => {
+//    let a
+
+    const res = await get_short_link({
+      article_url: url1,
+    })
+
+//    res["expand_link"] ? a = res["expand_link"] : a = url2
+
     void Taro.setClipboardData({
-      data: url,
+      data: res["expand_link"],
       fail: () => {
         void Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
       },
@@ -154,8 +162,6 @@ const History = () => {
     const res = await list_link(id, pageSize, ++pageNumber)
     console.log(res)
     setIsMore(res.next !== null)
-//    console.log(historyItem, results)
-//    setHistoryItem(historyItem.concat(res.results))
     setHistoryItem([...historyItem, ...res.results])
     Taro.hideToast()
   }
@@ -178,8 +184,8 @@ const History = () => {
             </View>
             <View className='bottom'>
               <Text>{item.time}</Text>
-              {/*<Text>阅读 {item.read}</Text>*/}
-              {item.expand_link ? <Text onClick={() => copyLink(item.expand_link)}>复制链接</Text> : <Text>正在生成中...</Text>}
+              {item.article_url ? <Text onClick={() => copyLink(item.article_url)}>复制链接</Text> : <Text>正在生成中...</Text>}
+              {/*<Text onClick={() => copyLink(item.article_url)}>复制链接</Text>*/}
             </View>
           </Item>),
         ) : <NotContent>
