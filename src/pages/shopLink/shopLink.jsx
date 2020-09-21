@@ -91,17 +91,16 @@ const ShopLink = () => {
     setSelector({...selector, current: selector.item[index], number: index})
   }
 
-  const startLink = () => {
+  const startLink = async () => {
     const linkList = [
       {type: 1, link: "https://u.jd.com/"},
-      {type: 2, link: "https://p.pinduoduo.com/"},
+//      {type: 2, link: "https://p.pinduoduo.com/"},
     ]
     const reg = "(https|http)?://(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].[a-z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*().;?:@&=+$,%#-]*)+)?"
     searchStr = linkStr.match(reg)
     if (inputValue !== "" && searchStr !== null) {
       let flag = false
       let type = 1
-      console.log(searchStr[0])
       linkList.forEach(item => {
         if (searchStr[0].indexOf(item.link) === 0) {
           flag = true
@@ -109,9 +108,14 @@ const ShopLink = () => {
         }
       })
       if (flag) {
-        void getCreateLink(selector.current, parseInt(id), searchStr[0], type)
-        successLink()
-        setInputValue("")
+        getCreateLink(selector.current, parseInt(id), searchStr[0], type).then(
+          () => {
+            successLink()
+          },
+          ()=>{
+
+          }
+        )
         return
       }
     }
@@ -130,7 +134,7 @@ const ShopLink = () => {
         height={200}
         onChange={countNumber}
         maxLength={500}
-        placeholder='将京东/拼多多商品信息粘贴到此处...'
+        placeholder='将京东商品信息粘贴到此处...'
         placeholderStyle='color: #c9c9c9;'
       />
       <ButtonWrapper>

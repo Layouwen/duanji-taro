@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react"
 import Taro from "@tarojs/taro"
-import { Image, Text, View } from "@tarojs/components"
+import { Button, Image, Text, View } from "@tarojs/components"
 import { styled } from "linaria/react"
-//import { AtNoticebar } from "taro-ui"
 
 import cart from "../../assets/images/cart.png"
-//import QRcode from "../../assets/images/QRcode.png"
 import history from "../../assets/images/list.png"
 import help from "../../assets/images/help.png"
 import share from "../../assets/images/share.png"
@@ -15,11 +13,20 @@ import feedback from "../../assets/images/feedback.png"
 import kouhao from "../../assets/images/kouhao.png"
 
 import EyButton from "../../components/EyButton"
-import EyLogin from "../../components/Login"
 
 const Container = styled(View)`
+  position: relative;
   height: 100vh;
   background: #EDEDED;
+  > .settings {
+    position: absolute;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0);
+  }
 `
 
 const BigTitle = styled(View)`
@@ -76,19 +83,9 @@ export default () => {
 
   useEffect(() => {
     void Taro.showShareMenu({withShareTicket: true})
-    void init()
   }, [])
 
-  const init = async () => {
-    let {authSetting} = await Taro.getSetting()
-    if (authSetting["scope.userInfo"] !== true) { setIsLogin(false) }
-  }
-
-  const onGetUserInfoEventDetail = (data) => {
-    console.log(data)
-  }
-
-  const linkShop = () => {
+  const linkShop = async () => {
     void Taro.navigateTo({url: "/pages/shopLink/shopLink"})
   }
 
@@ -104,14 +101,21 @@ export default () => {
     void Taro.navigateTo({url: "/pages/faq/faq"})
   }
 
+  const settings = async () => {
+    let {authSetting} = await Taro.getSetting()
+    console.log(authSetting)
+    if (authSetting["scope.userInfo"] === true) {
+      setIsLogin(false)
+    }
+  }
+
   return (
     <Container>
-      {isLogin === true ? null : <EyLogin fn={onGetUserInfoEventDetail}/>}
+      {isLogin === false ? null : <Button className='settings' openType='getUserInfo' onClick={settings}></Button>}
       <BigTitle>
         <Image src={kouhao}/>
       </BigTitle>
       <ContentWrapper>
-        {/*<AtNoticebar icon='volume-plus' marquee>短内容带货用短集</AtNoticebar>*/}
         <BigButton onClick={linkShop}>
           <View>
             <Text>商品链接</Text>
@@ -121,15 +125,6 @@ export default () => {
             <Image src={cart}/>
           </View>
         </BigButton>
-        {/*<BigButton onClick={linkQRcode}>*/}
-        {/*  <View>*/}
-        {/*    <Text>二维码链接</Text>*/}
-        {/*    <Text>支持加好友/群、邀请海报...</Text>*/}
-        {/*  </View>*/}
-        {/*  <View>*/}
-        {/*    <Image src={QRcode}/>*/}
-        {/*  </View>*/}
-        {/*</BigButton>*/}
         <ButtonWrapper>
           <EyButton onClick={linkHistory} src={history} value='历史记录'/>
           <EyButton onClick={linkFaq} src={help} value='常见问题'/>
