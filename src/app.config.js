@@ -1,11 +1,11 @@
 export default {
   pages: [
-    "pages/test/test",
     "pages/index/index",
     "pages/shopLink/shopLink",
     "pages/QRcodePage/QRcodePage",
     "pages/history/history",
     "pages/faq/faq",
+    "pages/shareQRcode/index",
   ],
   window: {
     backgroundTextStyle: "light",
