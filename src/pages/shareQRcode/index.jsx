@@ -15,6 +15,7 @@ const Container = styled(View)`
 `
 
 let imagePath = ""
+let settings = null
 
 export default () => {
   const [template, setTemplate] = useState()
@@ -23,24 +24,52 @@ export default () => {
     const tem = new Card().palette()
     setTemplate(tem)
 
+    void getUserInfo()
 
+    Taro.getSetting({
+      success: function (res) {
+        if (!res.authSetting["scope.writePhotosAlbum"]) {
+          Taro.authorize({
+            scope: "scope.writePhotosAlbum",
+            success: function () {
+            },
+          })
+        }
+      },
+    })
   }, [])
+
+  const getUserInfo = async () => {
+    settings = await Taro.getSetting()
+    console.log(settings)
+  }
 
   const onImgOK = (e) => {
     imagePath = e.detail.path
-    console.log(e)
   }
 
   const saveImage = async () => {
-    await Taro.saveImageToPhotosAlbum({
-      filePath: imagePath,
-    })
+    await getUserInfo()
+    if (settings.authSetting["scope.writePhotosAlbum"] === true) {
+      await Taro.saveImageToPhotosAlbum({
+        filePath: imagePath,
+        success: () => {
+          Taro.showToast({
+            title: "保存成功",
+            icon: "success",
+            duration: 2000,
+          })
+        },
+      })
+      return
+    }
+    await Taro.openSetting()
   }
 
   return (
     <Container>
       <painter palette={template} onImgOK={onImgOK}/>
-      <EyButton onClick={saveImage} value='分享'></EyButton>
+      <EyButton onClick={saveImage} value='保存到相册'></EyButton>
     </Container>
   )
 }

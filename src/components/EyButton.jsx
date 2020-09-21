@@ -1,6 +1,6 @@
 import React from "react"
-import {Button, Image, Text, View} from "@tarojs/components"
-import {styled} from "linaria/react"
+import { Button, Image, Text, View } from "@tarojs/components"
+import { styled } from "linaria/react"
 
 const Wrapper = styled(View)`
   > .button-wrapper {
@@ -23,11 +23,13 @@ const Wrapper = styled(View)`
 `
 
 const EyButton = (props) => {
+  const {src, onClick, type, value} = props
+
   return (
     <Wrapper>
-      <Button className='button-wrapper' onClick={props.onClick} openType={props.type}>
-        <Image src={props.src}/>
-        <Text>{props.value}</Text>
+      <Button className='button-wrapper' onClick={onClick} openType={type}>
+        {src ? <Image src={src}/> : null}
+        <Text>{value}</Text>
       </Button>
     </Wrapper>
   )

@@ -1,80 +1,32 @@
-import Avatar from "../assets/images/picture.png"
+import QRcode from "../assets/images/QRcode.jpg"
+import QRcodeBg from "../assets/images/QRcodeBg.png"
 
 export default class LastMayday {
   palette() {
-    return ({
-      "width": "654rpx",
-      "height": "1000rpx",
-      "background": "https://i.loli.net/2020/09/19/BWG795erCL4ZFnH.png",
-      "views": [
-        {
-          "type": "qrcode",
-          "content": "哈哈哈",
-          "css": {
-            "color": "#000000",
-            "background": "#ffffff",
-            "width": "123.50000000000001rpx",
-            "height": "123.50000000000001rpx",
-            "top": "801.5rpx",
-            "left": "79rpx",
-            "rotate": "0",
-            "borderRadius": "",
+    return (
+      {
+        "width": "654rpx",
+        "height": "1000rpx",
+        "background": QRcodeBg,
+        "views": [
+          {
+            "type": "image",
+            "url": QRcode,
+            "css": {
+              "width": "120rpx",
+              "height": "120rpx",
+              "top": "800rpx",
+              "left": "90rpx",
+              "rotate": "0",
+              "borderRadius": "",
+              "borderWidth": "",
+              "borderColor": "#000000",
+              "shadow": "",
+              "mode": "scaleToFill",
+            },
           },
-        },
-      ],
-    })
+        ],
+      }
+    )
   }
-}
-
-const startTop = 50
-const startLeft = 20
-const gapSize = 70
-const common = {
-  left: `${startLeft}rpx`,
-  fontSize: "40rpx",
-}
-
-function _textDecoration(decoration, index, color) {
-  return ({
-    type: "text",
-    text: decoration,
-    css: [{
-      top: `${startTop + index * gapSize}rpx`,
-      color: color,
-      textDecoration: decoration,
-    }, common],
-  })
-}
-
-function _image(index, rotate, borderRadius) {
-  return ({
-    type: "image",
-    url: Avatar,
-    css: {
-      top: `${startTop + 8.5 * gapSize}rpx`,
-      left: `${startLeft + 160 * index}rpx`,
-      width: "120rpx",
-      height: "120rpx",
-      shadow: "10rpx 10rpx 5rpx #888888",
-      rotate: rotate,
-      borderRadius: borderRadius,
-    },
-  })
-}
-
-function _des(index, content) {
-  const des = {
-    type: "text",
-    text: content,
-    css: {
-      fontSize: "22rpx",
-      top: `${startTop + 8.5 * gapSize + 140}rpx`,
-    },
-  }
-  if (index === 3) {
-    des.css.right = "60rpx"
-  } else {
-    des.css.left = `${startLeft + 120 * index + 30}rpx`
-  }
-  return des
 }
