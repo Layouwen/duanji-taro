@@ -26,17 +26,17 @@ export default () => {
 
     void getUserInfo()
 
-    Taro.getSetting({
-      success: function (res) {
-        if (!res.authSetting["scope.writePhotosAlbum"]) {
-          Taro.authorize({
-            scope: "scope.writePhotosAlbum",
-            success: function () {
-            },
-          })
-        }
-      },
-    })
+//    Taro.getSetting({
+//      success: function (res) {
+//        if (!res.authSetting["scope.writePhotosAlbum"]) {
+//          Taro.authorize({
+//            scope: "scope.writePhotosAlbum",
+//            success: function () {
+//            },
+//          })
+//        }
+//      },
+//    })
   }, [])
 
   const getUserInfo = async () => {
@@ -49,6 +49,22 @@ export default () => {
 
   const saveImage = async () => {
     await getUserInfo()
+
+    console.log(settings)
+    Taro.getSetting({
+      success: function (res) {
+        if (!res.authSetting["scope.writePhotosAlbum"]) {
+          Taro.authorize({
+            scope: "scope.writePhotosAlbum",
+            success: function () {
+            },
+            fail: function () {
+              Taro.openSetting()
+            },
+          })
+        }
+      },
+    })
     if (settings.authSetting["scope.writePhotosAlbum"] === true) {
       await Taro.saveImageToPhotosAlbum({
         filePath: imagePath,
@@ -60,9 +76,9 @@ export default () => {
           })
         },
       })
-      return
+    } else if(settings.authSetting["scope.writePhotosAlbum"] === false) {
+      await Taro.openSetting()
     }
-    await Taro.openSetting()
   }
 
   return (
