@@ -41,7 +41,6 @@ export default () => {
 
   const getUserInfo = async () => {
     settings = await Taro.getSetting()
-    console.log(settings)
   }
 
   const onImgOK = (e) => {

@@ -90,28 +90,52 @@ const LoadMore = styled(View)`
 
 const {id} = Taro.getStorageSync("userinfo")
 let pageNumber = 0
-const pageSize = 5
+const pageSize = 8
+let postRequest
 
 const History = () => {
   const [historyItem, setHistoryItem] = useState([])
   const [isMore, setIsMore] = useState(true)
-  const [number, setNumber] = useState(0)
 
   useEffect(() => {
     loadMore()
+    return () => {
+      clearInterval(postRequest)
+    }
   }, [])
 
   useEffect(() => {
-    if (number !== 0) {
-      loadMore()
-    }
-  }, [number])
+      let flag = false
+      historyItem.forEach(item => {
+        if (item["expand_link"] === null) {
+          flag = true
+        }
+      })
+      if (flag) {
+        clearInterval(postRequest)
+        post()
+      }
+    },
+  )
+
+  const post = () => {
+    postRequest = setInterval(() => {
+      refresh()
+    }, 7000)
+  }
+
+  const initData = async () => {
+    pageNumber = 0
+    await setIsMore(true)
+    const res = await list_link(id, pageSize, ++pageNumber)
+    setIsMore(res.next !== null)
+    setHistoryItem(res.results)
+  }
 
   const refresh = async () => {
-    pageNumber = 0
-    setHistoryItem([])
-    setIsMore(true)
-    setNumber(number + 1)
+    console.log(historyItem.length)
+    const res = await list_link(id, historyItem.length, 1)
+    setHistoryItem(res.results)
   }
 
   const copyLink = (url) => {
@@ -124,21 +148,21 @@ const History = () => {
   }
 
   const loadMore = async () => {
-    await Taro.showToast({title: "加载数据中", icon: "loading", duration: 9999})
-    const flag = pageSize * pageNumber <= historyItem.length
-    if (!flag) { setIsMore(flag) }
-    const {results} = await list_link(id, pageSize, ++pageNumber)
+    if (isMore === false) return
+    await Taro.showToast({title: "加载数据中", icon: "loading"})
+    const res = await list_link(id, pageSize, ++pageNumber)
+    setIsMore(res.next !== null)
+    setHistoryItem([...historyItem, ...res.results])
     Taro.hideToast()
-    console.log(1111)
-    setHistoryItem([...historyItem, ...results])
   }
+
 
   return (
     <Container>
       <Title>
         <View className='top'>
           <Text>共有{historyItem ? historyItem.length : 0}个链接</Text>
-          <Text onClick={refresh}>刷新</Text>
+          <Text onClick={initData}>刷新</Text>
         </View>
       </Title>
       <ContentWrapper>
@@ -151,13 +175,14 @@ const History = () => {
             <View className='bottom'>
               <Text>{item.time}</Text>
               {/*<Text>阅读 {item.read}</Text>*/}
-              <Text onClick={() => copyLink(item.link)}>复制链接</Text>
+              {item.expand_link ? <Text onClick={() => copyLink(item.expand_link)}>复制链接</Text> : <Text>正在生成中...</Text>}
             </View>
           </Item>),
         ) : <NotContent>
           暂无历史记录
         </NotContent>}
-        {isMore ? <LoadMore onClick={loadMore}>点击加载历史链接</LoadMore> : <LoadMore>暂无更多</LoadMore>}
+        {historyItem.length === 0 ? null : isMore ? <LoadMore onClick={loadMore}>点击加载历史链接</LoadMore> :
+          <LoadMore>暂无更多</LoadMore>}
       </ContentWrapper>
     </Container>
   )
