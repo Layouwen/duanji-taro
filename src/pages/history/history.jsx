@@ -98,6 +98,7 @@ const History = () => {
   const [isMore, setIsMore] = useState(true)
 
   useEffect(() => {
+    pageNumber = 0
     loadMore()
     return () => {
       clearInterval(postRequest)
@@ -151,7 +152,10 @@ const History = () => {
     if (isMore === false) return
     await Taro.showToast({title: "加载数据中", icon: "loading"})
     const res = await list_link(id, pageSize, ++pageNumber)
+    console.log(res)
     setIsMore(res.next !== null)
+//    console.log(historyItem, results)
+//    setHistoryItem(historyItem.concat(res.results))
     setHistoryItem([...historyItem, ...res.results])
     Taro.hideToast()
   }
@@ -169,8 +173,8 @@ const History = () => {
         {historyItem.length > 0 ? historyItem.map(item => (
           <Item key={item.id}>
             <View className='title'>
-              <Text>[新版]</Text>
-              <Text>{item.title}</Text>
+              <Text></Text>
+              <Text>{item.goods_name ? item.goods_name : item.title}</Text>
             </View>
             <View className='bottom'>
               <Text>{item.time}</Text>
