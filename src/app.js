@@ -1,7 +1,7 @@
-import {Component} from "react"
+import { Component } from "react"
 import Taro from "@tarojs/taro"
 import "taro-ui/dist/style/index.scss"
-import {login} from "./utils/auth"
+import { login } from "./utils/auth"
 import "./app.scss"
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
         void login()
       }
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 

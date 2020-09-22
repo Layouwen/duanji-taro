@@ -7,8 +7,7 @@ const EyLogin = () => {
   const onClose = () => {
     setShowModal(false)
   }
-  const getUserInfo = (data) => {
-    console.log(data)
+  const getUserInfo = () => {
     onClose()
   }
   return (

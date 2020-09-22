@@ -52,12 +52,6 @@ const Item = styled(View)`
   margin-top: 20px;
   border-radius: 8px;
   background: #fff;
-  > .title {
-    //> Text:first-child {
-    //  margin-right: 10px;
-    //  color: #DB6F66;
-    //}
-  }
   > .bottom {
     display: flex;
     margin-top: 20px;
@@ -134,21 +128,16 @@ const History = () => {
   }
 
   const refresh = async () => {
-    console.log(historyItem.length)
     const res = await list_link(id, historyItem.length, 1)
     setHistoryItem(res.results)
   }
 
-  const copyLink = async (url1, url2) => {
-//    let a
-
+  const copyLink = async (url1) => {
     const res = await get_short_link({
       article_url: url1,
     })
 
-//    res["expand_link"] ? a = res["expand_link"] : a = url2
-
-    void Taro.setClipboardData({
+    await Taro.setClipboardData({
       data: res["expand_link"],
       fail: () => {
         void Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
@@ -165,7 +154,6 @@ const History = () => {
     setHistoryItem([...historyItem, ...res.results])
     Taro.hideToast()
   }
-
 
   return (
     <Container>
