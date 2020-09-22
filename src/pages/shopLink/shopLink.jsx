@@ -60,8 +60,6 @@ const successLink = () => {
   })
 }
 
-let {id} = Taro.getStorageSync("userinfo")
-
 const ShopLink = () => {
   const [inputValue, setInputValue] = useState("")
   const [selector, setSelector] = useState(select)
@@ -108,6 +106,7 @@ const ShopLink = () => {
         }
       })
       if (flag) {
+        const {id} = Taro.getStorageSync("userinfo")
         getCreateLink(selector.current, parseInt(id), searchStr[0], type).then(
           () => {
             successLink()

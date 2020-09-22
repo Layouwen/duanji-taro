@@ -82,7 +82,6 @@ const LoadMore = styled(View)`
   text-decoration: underline;
  `
 
-const {id} = Taro.getStorageSync("userinfo")
 let pageNumber = 0
 const pageSize = 8
 let postRequest
@@ -122,12 +121,15 @@ const History = () => {
   const initData = async () => {
     pageNumber = 0
     await setIsMore(true)
+    const {id} = Taro.getStorageSync("userinfo")
+    console.log(id)
     const res = await list_link(id, pageSize, ++pageNumber)
     setIsMore(res.next !== null)
     setHistoryItem(res.results)
   }
 
   const refresh = async () => {
+    const {id} = Taro.getStorageSync("userinfo")
     const res = await list_link(id, historyItem.length, 1)
     setHistoryItem(res.results)
   }
@@ -148,6 +150,7 @@ const History = () => {
   const loadMore = async () => {
     if (isMore === false) return
     await Taro.showToast({title: "加载数据中", icon: "loading"})
+    const {id} = Taro.getStorageSync("userinfo")
     const res = await list_link(id, pageSize, ++pageNumber)
     setIsMore(res.next !== null)
     setHistoryItem([...historyItem, ...res.results])
