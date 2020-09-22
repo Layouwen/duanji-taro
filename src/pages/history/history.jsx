@@ -149,7 +149,6 @@ const History = () => {
     if (isMore === false) return
     await Taro.showToast({title: "加载数据中", icon: "loading"})
     const res = await list_link(id, pageSize, ++pageNumber)
-    console.log(res)
     setIsMore(res.next !== null)
     setHistoryItem([...historyItem, ...res.results])
     Taro.hideToast()

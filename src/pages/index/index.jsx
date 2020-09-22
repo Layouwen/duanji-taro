@@ -103,7 +103,6 @@ export default () => {
 
   const settings = async () => {
     let {authSetting} = await Taro.getSetting()
-    console.log(authSetting)
     if (authSetting["scope.userInfo"] === true) {
       setIsLogin(false)
     }
