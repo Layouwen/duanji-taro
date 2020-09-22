@@ -16,7 +16,6 @@ const Container = styled(View)`
 
 const QRcodePage = () => {
   const selectQRcode = () => {
-    console.log(11)
   }
   return (
     <Container>

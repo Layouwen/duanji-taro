@@ -6,7 +6,6 @@ const {
 } = Taro.getAccountInfoSync()
 
 export async function login() {
-  console.log("我执行了")
   const {code} = await Taro.login()
   const userinfo = await request.post("basebone/member/login/weapp/", {
     code,

@@ -36,7 +36,7 @@ const ButtonWrapper = styled(View)`
 `
 
 const select = {
-  item: ["查看同款商品", "查看视频同款", "购买同款商品", "购买视频同款", "点击查看同款", "点击购买商品", "点击购买同款", "买同款点这里", "视频同款商品", "自定义引导词"],
+  item: ["查看同款商品", "查看视频同款", "购买同款商品", "购买视频同款", "点击查看同款", "点击购买商品", "点击购买同款", "买同款点这里", "视频同款商品"],
   current: "查看同款商品",
   number: 0,
 }
@@ -59,8 +59,6 @@ const successLink = () => {
     duration: 2000,
   })
 }
-
-let {id} = Taro.getStorageSync("userinfo")
 
 const ShopLink = () => {
   const [inputValue, setInputValue] = useState("")
@@ -108,13 +106,14 @@ const ShopLink = () => {
         }
       })
       if (flag) {
+        const {id} = Taro.getStorageSync("userinfo")
         getCreateLink(selector.current, parseInt(id), searchStr[0], type).then(
           () => {
             successLink()
           },
-          ()=>{
+          () => {
 
-          }
+          },
         )
         return
       }

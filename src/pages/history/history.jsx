@@ -52,12 +52,6 @@ const Item = styled(View)`
   margin-top: 20px;
   border-radius: 8px;
   background: #fff;
-  > .title {
-    //> Text:first-child {
-    //  margin-right: 10px;
-    //  color: #DB6F66;
-    //}
-  }
   > .bottom {
     display: flex;
     margin-top: 20px;
@@ -88,7 +82,6 @@ const LoadMore = styled(View)`
   text-decoration: underline;
  `
 
-const {id} = Taro.getStorageSync("userinfo")
 let pageNumber = 0
 const pageSize = 8
 let postRequest
@@ -128,27 +121,25 @@ const History = () => {
   const initData = async () => {
     pageNumber = 0
     await setIsMore(true)
+    const {id} = Taro.getStorageSync("userinfo")
+    console.log(id)
     const res = await list_link(id, pageSize, ++pageNumber)
     setIsMore(res.next !== null)
     setHistoryItem(res.results)
   }
 
   const refresh = async () => {
-    console.log(historyItem.length)
+    const {id} = Taro.getStorageSync("userinfo")
     const res = await list_link(id, historyItem.length, 1)
     setHistoryItem(res.results)
   }
 
-  const copyLink = async (url1, url2) => {
-//    let a
-
+  const copyLink = async (url1) => {
     const res = await get_short_link({
       article_url: url1,
     })
 
-//    res["expand_link"] ? a = res["expand_link"] : a = url2
-
-    void Taro.setClipboardData({
+    await Taro.setClipboardData({
       data: res["expand_link"],
       fail: () => {
         void Taro.showToast({title: "复制失败", icon: "none", duration: 1000})
@@ -159,13 +150,12 @@ const History = () => {
   const loadMore = async () => {
     if (isMore === false) return
     await Taro.showToast({title: "加载数据中", icon: "loading"})
+    const {id} = Taro.getStorageSync("userinfo")
     const res = await list_link(id, pageSize, ++pageNumber)
-    console.log(res)
     setIsMore(res.next !== null)
     setHistoryItem([...historyItem, ...res.results])
     Taro.hideToast()
   }
-
 
   return (
     <Container>

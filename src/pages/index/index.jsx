@@ -14,6 +14,9 @@ import kouhao from "../../assets/images/kouhao.png"
 
 import EyButton from "../../components/EyButton"
 
+import { updateUserData, login } from "../../utils/auth"
+import { WEAPPID } from "../../config"
+
 const Container = styled(View)`
   position: relative;
   height: 100vh;
@@ -21,11 +24,15 @@ const Container = styled(View)`
   > .settings {
     position: absolute;
     z-index: 99999;
-    top: 0;
+    top: 350px;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 180px;
+    border-radius: 0;
     background: rgba(0,0,0,0);
+    &::before, &::after {
+      display:none;
+    }
   }
 `
 
@@ -79,13 +86,13 @@ const ButtonWrapper = styled(View)`
 `
 
 export default () => {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => {
     void Taro.showShareMenu({withShareTicket: true})
   }, [])
 
-  const linkShop = async () => {
+  const linkShop = () => {
     void Taro.navigateTo({url: "/pages/shopLink/shopLink"})
   }
 
@@ -101,17 +108,27 @@ export default () => {
     void Taro.navigateTo({url: "/pages/faq/faq"})
   }
 
-  const settings = async () => {
-    let {authSetting} = await Taro.getSetting()
-    console.log(authSetting)
-    if (authSetting["scope.userInfo"] === true) {
-      setIsLogin(false)
+  const settings = async (data) => {
+    const {detail: {encryptedData, iv}} = data
+    let userinfo = Taro.getStorageSync("userinfo")
+    if (userinfo.avatar) {
+      linkShop()
+      return
     }
+    if (data.detail.errMsg === "getUserInfo:fail auth deny") return
+    updateUserData({
+      "appid": WEAPPID,
+      "enc_data": encryptedData,
+      "iv": iv,
+    }).then(() => {
+      login()
+    })
+    if (userinfo.avatar) { setIsLogin(false) }
   }
 
   return (
     <Container>
-      {isLogin === false ? null : <Button className='settings' openType='getUserInfo' onClick={settings}></Button>}
+      {isLogin ? <Button className='settings' onGetUserInfo={settings} openType='getUserInfo'></Button> : null}
       <BigTitle>
         <Image src={kouhao}/>
       </BigTitle>

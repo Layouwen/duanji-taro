@@ -50,7 +50,6 @@ export default () => {
   const saveImage = async () => {
     await getUserInfo()
 
-    console.log(settings)
     Taro.getSetting({
       success: function (res) {
         if (!res.authSetting["scope.writePhotosAlbum"]) {

@@ -1,6 +1,7 @@
 import Taro from "@tarojs/taro";
 import { setCookies, getCookies } from "./cookie";
 import { login } from "./auth";
+import querystring from "querystring";
 
 const defaultOptions = {
   baseURL: "https://duanji.gitmen.cn",
@@ -86,7 +87,10 @@ class Request {
 
   request = (...args) => request(...args, this.options);
 
-  get = (path, query = {}) => this.request("GET", path, { data: query });
+  get = (path, query = {}) =>
+    this.request("GET", path, {
+      data: querystring.parse(querystring.stringify(query)),
+    });
   post = (path, body = {}) => this.request("POST", path, { data: body });
   patch = (path, body = {}) => this.request("PATCH", path, { data: body });
   put = (path, body = {}) => this.request("PUT", path, { data: body });
