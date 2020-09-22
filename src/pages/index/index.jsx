@@ -85,7 +85,7 @@ export default () => {
     void Taro.showShareMenu({withShareTicket: true})
   }, [])
 
-  const linkShop = async () => {
+  const linkShop = () => {
     void Taro.navigateTo({url: "/pages/shopLink/shopLink"})
   }
 
