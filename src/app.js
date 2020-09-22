@@ -7,6 +7,7 @@ class App extends Component {
 
   componentDidMount() {
     checkLogin()
+    console.log(1)
   }
 
   componentDidShow() {

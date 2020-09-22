@@ -86,7 +86,7 @@ const ButtonWrapper = styled(View)`
 `
 
 export default () => {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => {
     void Taro.showShareMenu({withShareTicket: true})
@@ -110,20 +110,20 @@ export default () => {
 
   const settings = async (data) => {
     const {detail: {encryptedData, iv}} = data
-    let value = Taro.getStorageSync("userinfo")
-    if (data.detail.errMsg === "getUserInfo:fail auth deny") return
-    if (value.avatar) {
-      setIsLogin(false)
+    let userinfo = Taro.getStorageSync("userinfo")
+    if (userinfo.avatar) {
+      linkShop()
       return
     }
+    if (data.detail.errMsg === "getUserInfo:fail auth deny") return
     updateUserData({
       "appid": WEAPPID,
       "enc_data": encryptedData,
       "iv": iv,
     }).then(() => {
       login()
-      setIsLogin(false)
     })
+    if (userinfo.avatar) { setIsLogin(false) }
   }
 
   return (
