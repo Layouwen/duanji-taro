@@ -24,6 +24,7 @@ async function showAuthModal(errMsg) {
 
 const defaultOptions = {
   baseURL: "https://duanji.gitmen.cn",
+//  baseURL: "http://192.168.31.186:8003",
   // baseURL: "http://127.0.0.1:8003",
 };
 
@@ -88,6 +89,7 @@ async function request(
       await showAuthModal(responseData.error_message)
     }
     await login();
+    console.log(1)
     return await request(...arguments);
   }
   if (error_code !== 0) {
