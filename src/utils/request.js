@@ -3,6 +3,25 @@ import { setCookies, getCookies } from "./cookie";
 import { login } from "./auth";
 import querystring from "querystring";
 
+const authFailModal = { modal: undefined }
+async function showAuthModal(errMsg) {
+  if (authFailModal.modal) {
+    return await authFailModal.modal
+  }
+
+  authFailModal.modal = Taro.showModal({
+    title: '登录信息无效',
+    content: errMsg,
+    showCancel: false,
+    confirmText: '重试',
+  })
+  try {
+    return await authFailModal.modal
+  } finally {
+    authFailModal.modal = undefined
+  }
+}
+
 const defaultOptions = {
   baseURL: "https://duanji.gitmen.cn",
   // baseURL: "http://127.0.0.1:8003",
@@ -65,6 +84,9 @@ async function request(
   const error_code = parseInt(responseData.error_code, 10);
 
   if (error_code === 403) {
+    if(showAuthModal){
+      await showAuthModal(responseData.error_message)
+    }
     await login();
     return await request(...arguments);
   }
