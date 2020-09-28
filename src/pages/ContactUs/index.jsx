@@ -2,7 +2,6 @@ import React from "react"
 import {Image, View} from "@tarojs/components"
 import {styled} from "linaria/react"
 
-import QRcode from "../../assets/images/QRcodeDemo.png"
 import MainButton from "../../components/MainButton"
 
 const Container = styled(View)`
@@ -19,7 +18,7 @@ export default () => {
   }
   return (
     <Container>
-      <Image src={QRcode}/>
+      {/*<Image src={QRcode}/>*/}
       <MainButton fn={selectQRcode}>点击选择二维码</MainButton>
     </Container>
   )

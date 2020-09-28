@@ -11,7 +11,6 @@ import share from "../../assets/images/share.png"
 import picture from "../../assets/images/picture.png"
 import contact from "../../assets/images/contact.png"
 import feedback from "../../assets/images/feedback.png"
-import kouhao from "../../assets/images/kouhao.jpg"
 
 import EyButton from "../../components/EyButton"
 
@@ -98,7 +97,10 @@ export default () => {
   }
 
   const linkContactUs = () => {
-    void Taro.navigateTo({url: "/pages/ContactUs/index"})
+    void Taro.previewImage({
+      current: 'https://gitmen-bsm.oss-cn-beijing.aliyuncs.com/media/rc-upload-1601284094358-3', // 当前显示图片的http链接
+      urls: ['https://gitmen-bsm.oss-cn-beijing.aliyuncs.com/media/rc-upload-1601284094358-3'], // 需要预览的图片http链接列表
+    })
   }
 
   const linkQRcode = () => {
@@ -135,7 +137,7 @@ export default () => {
     <Container>
       {isLogin ? <Button className='settings' onGetUserInfo={settings} openType='getUserInfo'></Button> : null}
       <BigTitle>
-        <Image src={kouhao}/>
+        <Image src='https://gitmen-bsm.oss-cn-beijing.aliyuncs.com/media/rc-upload-1601284094358-5'/>
       </BigTitle>
       <ContentWrapper>
         <BigButton onClick={linkShop}>
