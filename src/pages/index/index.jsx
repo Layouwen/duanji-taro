@@ -4,13 +4,14 @@ import { Button, Image, Text, View } from "@tarojs/components"
 import { styled } from "linaria/react"
 
 import cart from "../../assets/images/cart.png"
+import QRcode from "../../assets/images/QRcode.png"
 import history from "../../assets/images/list.png"
 import help from "../../assets/images/help.png"
 import share from "../../assets/images/share.png"
 import picture from "../../assets/images/picture.png"
 import contact from "../../assets/images/contact.png"
 import feedback from "../../assets/images/feedback.png"
-import kouhao from "../../assets/images/kouhao.png"
+import kouhao from "../../assets/images/kouhao.jpg"
 
 import EyButton from "../../components/EyButton"
 
@@ -38,7 +39,7 @@ const Container = styled(View)`
 
 const BigTitle = styled(View)`
   height: 300px;
-  background: #1254aa;
+  background: #ff6700;
   > Image {
     width: 100%;
     height: 100%;
@@ -56,7 +57,7 @@ const BigButton = styled(View)`
   padding: 28px 40px 28px 52px;
   margin-top: 32px;
   border-radius: 12px;
-  background: #1254aa;
+  background: #ff6700;
   > View:first-child {
     flex: 1;
     display: flex;
@@ -94,6 +95,10 @@ export default () => {
 
   const linkShop = () => {
     void Taro.navigateTo({url: "/pages/shopLink/shopLink"})
+  }
+
+  const linkContactUs = () => {
+    void Taro.navigateTo({url: "/pages/ContactUs/index"})
   }
 
   const linkQRcode = () => {
@@ -136,10 +141,19 @@ export default () => {
         <BigButton onClick={linkShop}>
           <View>
             <Text>商品链接</Text>
-            <Text>支持京东/拼多多佣金链接</Text>
+            <Text>支持京东佣金链接</Text>
           </View>
           <View>
             <Image src={cart}/>
+          </View>
+        </BigButton>
+        <BigButton onClick={linkContactUs}>
+          <View>
+            <Text>联系我们</Text>
+            <Text>获取更多视频号带货内容</Text>
+          </View>
+          <View>
+            <Image src={QRcode}/>
           </View>
         </BigButton>
         <ButtonWrapper>

@@ -14,7 +14,7 @@ const Container = styled(View)`
   }
 `
 
-const QRcodePage = () => {
+export default () => {
   const selectQRcode = () => {
   }
   return (
@@ -24,5 +24,3 @@ const QRcodePage = () => {
     </Container>
   )
 }
-
-export default QRcodePage
