@@ -1,5 +1,6 @@
 import QRcode from "../assets/images/QRcode.jpg"
-import QRcodeBg from "../assets/images/QRcodeBg.png"
+import QRbg from "../assets/images/QRbg.jpg"
+
 
 export default class LastMayday {
   palette() {
@@ -7,11 +8,11 @@ export default class LastMayday {
       {
         "width": "654rpx",
         "height": "1000rpx",
-        "background": QRcodeBg,
+        "background": QRbg,
         "views": [
           {
             "type": "image",
-            "url": QRcode,
+//            "url": QRcode,
             "css": {
               "width": "120rpx",
               "height": "120rpx",
